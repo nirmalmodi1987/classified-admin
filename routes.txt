@@ -1,0 +1,22 @@
+
+  [41;1m Illuminate\Contracts\Container\BindingResolutionException [49;22m
+
+[39;1m  Target class [files] does not exist.[39;22m
+
+  at [32mvendor\laravel\framework\src\Illuminate\Container\Container.php[39m:[32m1019[39m
+    1015▕ 
+    1016▕         try {
+    1017▕             $reflector = new ReflectionClass($concrete);
+    1018▕         } catch (ReflectionException $e) {
+  ➜ 1019▕             throw new BindingResolutionException("Target class [$concrete] does not exist.", 0, $e);
+    1020▕         }
+    1021▕ 
+    1022▕         // If the type is not instantiable, the developer is attempting to resolve
+    1023▕         // an abstract type such as an Interface or Abstract Class and there is
+
+  [33m1   [39m[39;1m[internal][39;22m:[39;1m0[39;22m
+  [90m    Illuminate\Foundation\Application::Illuminate\Foundation\{closure}(Object(Barryvdh\Debugbar\ServiceProvider), "Barryvdh\Debugbar\ServiceProvider")[39m
+
+  [33m2   [39m[39;1mvendor\laravel\framework\src\Illuminate\Container\Container.php[39;22m:[39;1m1017[39;22m
+  [90m    ReflectionException::("Class "files" does not exist")[39m
+
