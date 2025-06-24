@@ -7,7 +7,7 @@
             <h1 class="m-0">Users Management</h1>
         </div>
         <div class="col-sm-6 text-right">
-            <a href="{{ route('users.create') }}" class="btn btn-primary">
+            <a href="{{ route('admin.users.create') }}" class="btn btn-primary">
                 <i class="fas fa-plus mr-2"></i>Add New User
             </a>
         </div>

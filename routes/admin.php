@@ -56,7 +56,6 @@ Route::middleware(['auth:admin'])->name('admin.')->group(function () {
     // Users Management
     // Main resource
     Route::resource('users', UserController::class)->except(['edit', 'update']);
-
     // Additional user routes
     Route::prefix('users/{user}')->group(function () {
         Route::post('ban', [UserController::class, 'ban'])->name('users.ban');
