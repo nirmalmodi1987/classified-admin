@@ -10,12 +10,13 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        echo "Hello";
-        exit;
         return view('admin.dashboard', [
             'totalAds' => Ad::count(),
+            'activeAds' => Ad::where('is_active', '1')->count(),
+            'pendingAds' => Ad::where('is_active', '0')->count(),
             'totalUsers' => User::count(),
-            'recentAds' => Ad::latest()->take(5)->get()
+            'recentAds' => Ad::with('category')->latest()->take(5)->get(),
+            'recentUsers' => User::latest()->take(8)->get()
         ]);
     }
 }
