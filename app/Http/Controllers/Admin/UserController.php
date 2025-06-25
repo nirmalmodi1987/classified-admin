@@ -33,21 +33,22 @@ class UserController extends Controller
     // Store new user
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|min:8|confirmed',
-            'phone' => 'nullable|string|max:20',
-            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-            'is_active' => 'boolean',
-            'is_verified' => 'boolean'
-        ]);
+        // $request->validate([
+        //     'name' => 'required|string|max:255',
+        //     'email' => 'required|email|unique:users',
+        //     'password' => 'required|min:8|confirmed',
+        //     'phone' => 'nullable|string|max:20',
+        //     'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+        //     'is_active' => 'boolean',
+        //     'is_verified' => 'boolean'
+        // ]);
+
 
         $data = $request->except('avatar', 'password_confirmation');
-
         if ($request->hasFile('avatar')) {
             $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
         }
+
         User::create($data);
         return redirect()->route('admin.users.index')->with('success', 'User created successfully!');
     }

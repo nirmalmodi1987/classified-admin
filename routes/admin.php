@@ -57,9 +57,12 @@ Route::middleware(['auth:admin'])->name('admin.')->group(function () {
     // Main resource
     Route::resource('users', UserController::class)->except(['edit', 'update']);
     // Additional user routes
+     Route::post('users/{user}/toggle-active', [UserController::class, 'toggleActive'])
+         ->name('users.toggle-active');
+    Route::post('users/store', [UserController::class, 'store'])->name('users.store');
     Route::prefix('users/{user}')->group(function () {
-        Route::post('ban', [UserController::class, 'ban'])->name('users.ban');
-        Route::post('unban', [UserController::class, 'unban'])->name('users.unban');
+        // Route::post('ban', [UserController::class, 'ban'])->name('users.ban');
+        // Route::post('unban', [UserController::class, 'unban'])->name('users.unban');
     });
 
     // Locations Management
