@@ -33,15 +33,15 @@ class UserController extends Controller
     // Store new user
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'email' => 'required|email|unique:users',
-        //     'password' => 'required|min:8|confirmed',
-        //     'phone' => 'nullable|string|max:20',
-        //     'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
-        //     'is_active' => 'boolean',
-        //     'is_verified' => 'boolean'
-        // ]);
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8|confirmed',
+            'phone' => 'nullable|string|max:20',
+            'avatar' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'is_active' => 'boolean',
+            'is_verified' => 'boolean'
+        ]);
 
 
         $data = $request->except('avatar', 'password_confirmation');
@@ -75,12 +75,20 @@ class UserController extends Controller
 
         if ($request->hasFile('avatar')) {
             // Delete old avatar if exists
-            if ($user->avatar) {
+            if ($user->avatar && Storage::disk('public')->exists($user->avatar)) {
                 Storage::disk('public')->delete($user->avatar);
             }
-            $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
-        }
 
+            if ($request->hasFile('avatar')) {
+                try {
+                    $data['avatar'] = $request->file('avatar')->store('avatars', 'public');
+                    // $data['avatarPath'] = 'Avatar stored at: ' . Storage::disk('public')->path($data['avatar']);
+                } catch (\Exception $e) {
+                    return back()->with('error', 'Error uploading avatar: ' . $e->getMessage());
+                }
+            }
+        }
+        
         $user->update($data);
 
         return redirect()->route('admin.users.index')->with('success', 'User updated successfully!');

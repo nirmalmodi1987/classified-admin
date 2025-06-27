@@ -55,15 +55,25 @@ Route::middleware(['auth:admin'])->name('admin.')->group(function () {
 
     // Users Management
     // Main resource
-    Route::resource('users', UserController::class)->except(['edit', 'update']);
+    // Route::resource('users', UserController::class)->except(['update']);
     // Additional user routes
-     Route::post('users/{user}/toggle-active', [UserController::class, 'toggleActive'])
-         ->name('users.toggle-active');
+    Route::post('users/{user}/toggle-active', [UserController::class, 'toggleActive'])
+        ->name('users.toggle-active');
+    Route::post('users/{user}/toggle-verified', [UserController::class, 'toggleVerified'])
+        ->name('users.toggle-verified');
+    Route::match(['GET', 'POST'], 'users/{user}/edit', [UserController::class, 'edit'])
+        ->name('users.edit');
+    Route::match(['GET', 'POST', 'PUT'], 'users/{user}/update', [UserController::class, 'update'])
+        ->name('users.update');
     Route::post('users/store', [UserController::class, 'store'])->name('users.store');
-    Route::prefix('users/{user}')->group(function () {
-        // Route::post('ban', [UserController::class, 'ban'])->name('users.ban');
-        // Route::post('unban', [UserController::class, 'unban'])->name('users.unban');
-    });
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::get('users/create', [UserController::class, 'create'])->name('users.create');
+    Route::delete('users/{user}/destroy', [UserController::class, 'destroy'])->name('users.destroy');
+    
+    //Route::prefix('users/{user}')->group(function () {
+    // Route::post('ban', [UserController::class, 'ban'])->name('users.ban');
+    // Route::post('unban', [UserController::class, 'unban'])->name('users.unban');
+    //});
 
     // Locations Management
     Route::resource('locations', LocationController::class)->except(['show']);

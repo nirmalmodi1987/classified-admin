@@ -12,7 +12,25 @@
             </a>
         </div>
     </div>
+    @if ($message = Session::get('success'))
 
+        <div class="alert alert-success">
+
+            <p>{{ $message }}</p>
+
+        </div>
+
+    @endif
+
+    @if ($message = Session::get('error'))
+
+        <div class="alert alert-danger">
+
+            <p>{{ $message }}</p>
+
+        </div>
+
+    @endif
     <div class="card">
         <div class="card-header">
             <form action="{{ route('admin.users.index') }}" method="GET" class="form-inline">
@@ -47,7 +65,7 @@
                         <td>{{ $user->id }}</td>
                         <td>
                             @if($user->avatar)
-                            <img src="{{ asset('storage/'.$user->avatar) }}" alt="Avatar" class="img-circle" width="40">
+                            <img src="{{ asset('storage/' . $user->avatar) }}" alt="Avatar" class="img-circle" width="40">
                             @else
                             <div class="img-circle bg-secondary text-center"
                                 style="width:40px;height:40px;line-height:40px;">
@@ -59,7 +77,7 @@
                         <td>{{ $user->email }}</td>
                         <td>{{ $user->phone ?? '-' }}</td>
                         <td>
-                            <form action="{{ route('users.toggle-active', $user->id) }}" method="POST">
+                            <form action="{{ route('admin.users.toggle-active', $user->id) }}" method="POST">
                                 @csrf
                                 <button type="submit"
                                     class="btn btn-sm btn-{{ $user->is_active ? 'success' : 'secondary' }}">
@@ -68,7 +86,7 @@
                             </form>
                         </td>
                         <td>
-                            <form action="{{ route('users.toggle-verified', $user->id) }}" method="POST">
+                            <form action="{{ route('admin.users.toggle-verified', $user->id) }}" method="POST">
                                 @csrf
                                 <button type="submit"
                                     class="btn btn-sm btn-{{ $user->is_verified ? 'info' : 'warning' }}">
@@ -77,10 +95,10 @@
                             </form>
                         </td>
                         <td class="d-flex">
-                            <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-info mr-2">
+                            <a href="{{ route('admin.users.edit', $user->id) }}" class="btn btn-sm btn-info mr-2">
                                 <i class="fas fa-edit"></i>
                             </a>
-                            <form action="{{ route('users.destroy', $user->id) }}" method="POST">
+                            <form action="{{ route('admin.users.destroy', $user->id) }}" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-sm btn-danger"
