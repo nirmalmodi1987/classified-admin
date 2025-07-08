@@ -12,7 +12,25 @@
             </a>
         </div>
     </div>
+    @if ($message = Session::get('success'))
 
+        <div class="alert alert-success">
+
+            <p>{{ $message }}</p>
+
+        </div>
+
+    @endif
+
+    @if ($message = Session::get('error'))
+
+        <div class="alert alert-danger">
+
+            <p>{{ $message }}</p>
+
+        </div>
+
+    @endif
     <div class="card">
         <div class="card-header">
             <form action="{{ route('admin.users.index') }}" method="GET" class="form-inline">
@@ -47,7 +65,7 @@
                         <td>{{ $user->id }}</td>
                         <td>
                             @if($user->avatar)
-                            <img src="{{ asset('storage/'.$user->avatar) }}" alt="Avatar" class="img-circle" width="40">
+                            <img src="{{ asset('storage/' . $user->avatar) }}" alt="Avatar" class="img-circle" width="40">
                             @else
                             <div class="img-circle bg-secondary text-center"
                                 style="width:40px;height:40px;line-height:40px;">
