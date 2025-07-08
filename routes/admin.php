@@ -55,11 +55,14 @@ Route::middleware(['auth:admin'])->name('admin.')->group(function () {
 
     // Users Management
     // Main resource
-    Route::resource('users', UserController::class)->except(['edit', 'update']);
+    Route::resource('users', UserController::class)->except(['update']);
+    Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::get('users/{user}/destroy', [UserController::class, 'destroy'])->name('users.destroy');
     // Additional user routes
-     Route::post('users/{user}/toggle-active', [UserController::class, 'toggleActive'])
-         ->name('users.toggle-active');
+    Route::post('users/{user}/toggle-active', [UserController::class, 'toggleActive'])->name('users.toggle-active');
+    Route::post('users/{user}/toggle-verified', [UserController::class, 'toggleVerified'])->name('users.toggle-verified');
     Route::post('users/store', [UserController::class, 'store'])->name('users.store');
+
     Route::prefix('users/{user}')->group(function () {
         // Route::post('ban', [UserController::class, 'ban'])->name('users.ban');
         // Route::post('unban', [UserController::class, 'unban'])->name('users.unban');

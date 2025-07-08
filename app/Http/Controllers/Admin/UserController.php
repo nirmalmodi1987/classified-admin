@@ -100,6 +100,7 @@ class UserController extends Controller
     // Toggle active status
     public function toggleActive(User $user)
     {
+        print_r($user);
         $user->update(['is_active' => !$user->is_active]);
         return back()->with('success', 'Status updated!');
     }
